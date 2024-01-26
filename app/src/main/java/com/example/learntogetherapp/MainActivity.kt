@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppUI()
+                    LearnTogetherApp()
                 }
             }
         }
@@ -39,36 +40,51 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppUI(modifier: Modifier = Modifier) {
+fun LearnTogetherApp() {
+    ArticleCard(
+        title = stringResource(R.string.title_of_jetpack_compose),
+        shortDescription = stringResource(R.string.jetpack_compose_intro),
+        longDescription = stringResource(R.string.jetpack_compose_description),
+        imagePainter = painterResource(R.drawable.bg_compose_background)
+    )
+}
+
+@Composable
+private fun ArticleCard(
+    title: String,
+    shortDescription: String,
+    longDescription:String,
+    imagePainter: Painter,                          // new
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
 
-        val image = painterResource(R.drawable.bg_compose_background)
         Image(
-            painter = image,
+            painter = imagePainter,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
         )
 
         Text(
-            text = stringResource(R.string.title_of_jetpack_compose),
+            text = title,
             modifier = modifier
                 .padding(16.dp),
             fontSize = 24.sp
         )
 
         Text(
-            text = stringResource(R.string.jetpack_compose_intro),
+            text = shortDescription,
             modifier = modifier
                 .padding(start = 16.dp, end = 16.dp),
             textAlign = TextAlign.Justify               // new (21-01-2024)
         )
 
         Text(
-            text = stringResource(R.string.jetpack_compose_description),
+            text = longDescription,
             modifier = modifier
                 .padding(16.dp),
             textAlign = TextAlign.Justify               // new (21-01-2024)
@@ -78,11 +94,12 @@ fun AppUI(modifier: Modifier = Modifier) {
 
 @Preview(
     showBackground = true,
-    showSystemUi = true
+    showSystemUi = true,
+    name = "LearnTogetherApp"
 )
 @Composable
 fun AppUiPreview() {
     LearnTogetherAppTheme {
-        AppUI()
+        LearnTogetherApp()
     }
 }
